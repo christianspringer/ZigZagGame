@@ -6,6 +6,7 @@ public class PlatformSpawner : MonoBehaviour
 {
 
     public GameObject platform;
+    public GameObject diamond; 
     Vector3 lastPos;
     float size;
     public bool gameOver;
@@ -49,17 +50,37 @@ public class PlatformSpawner : MonoBehaviour
 
     void SpawnX()
     {
-        Vector3 pos = lastPos;
-        pos.x += size;
-        lastPos = pos;
-        Instantiate(platform, pos, Quaternion.identity);
+        Vector3 position = lastPos;
+        position.x += size;
+        lastPos = position;
+        Instantiate(platform, position, Quaternion.identity);
+        DiamondSpawn(GetDiamondPosition(position));
+
     }
 
     void SpawnZ()
     {
-        Vector3 pos = lastPos;
-        pos.z += size;
-        lastPos = pos;
-        Instantiate(platform, pos, Quaternion.identity);
+        Vector3 position = lastPos;
+        position.z += size;
+        lastPos = position;
+        Instantiate(platform, position, Quaternion.identity);
+        DiamondSpawn(GetDiamondPosition(position));
+
+
+    }
+
+    void DiamondSpawn(Vector3 position)
+    {
+        int random = Random.Range(0, 4);
+
+        if (random < 1)
+        {
+            Instantiate(diamond, position, diamond.transform.rotation);
+        }
+    }
+
+    Vector3 GetDiamondPosition(Vector3 platformPosition)
+    {
+        return new Vector3(platformPosition.x, platformPosition.y + 1, platformPosition.z);
     }
 }

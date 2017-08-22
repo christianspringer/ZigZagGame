@@ -13,6 +13,7 @@ public class BallController : MonoBehaviour
     bool gameover;
 
     Rigidbody rb;
+    public GameObject particleEffect;
 
     void Awake()
     {
@@ -62,6 +63,15 @@ public class BallController : MonoBehaviour
         else if (rb.velocity.x > 0)
         {
             rb.velocity = new Vector3(0, 0, speed);
+        }
+    }
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.tag == "diamond")
+        {
+            GameObject diamondParticleEffect = Instantiate(particleEffect, collider.gameObject.transform.position, Quaternion.identity);
+            Destroy(collider.gameObject);
+            Destroy(diamondParticleEffect, 1f);
         }
     }
 }
